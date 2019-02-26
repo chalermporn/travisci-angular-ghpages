@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - "10"
+dist: trusty
+sudo: false
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+    - node_modules
+
+addons:
+  chrome: stable
+
+install:
+  - npm install -g yarn
+
+script:
+  - yarn lint
+  - yarn build --base-href https://chalermporn.github.io/travisci-angular-ghpages/
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/travisci-gh-pages
+  on:
+    branch: master
